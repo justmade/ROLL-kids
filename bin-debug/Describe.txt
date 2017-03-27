@@ -1,0 +1,7 @@
+// this is a comment.
+//0是草地 1是路面
+# 0 type:DrawnIsoTile color:0x86e557 walkable:false 
+
+# 1 type:DrawnIsoTile color:0x999999 walkable:true  height:20
+
+

@@ -1,0 +1,28 @@
+// this is a comment.
+# 0 type:DrawnIsoTile color:0xff00ff walkable:false 
+
+# 1 type:DrawnIsoBox color:0xffffff walkable:false  height:20
+
+# 2 type:DrawnIsoBox color:0xff6666 walkable:false height:20
+
+# 3 type:DrawnIsoTile color:0x6666ff walkable:false 
+
+2 2 2 2 2 0 0 0 0 0
+
+0 1 1 1 1 1 1 1 1 0
+
+0 1 0 0 0 0 0 0 1 0
+
+0 1 0 3 3 3 3 0 1 0
+
+0 1 0 3 2 2 3 0 0 0
+
+0 1 0 3 2 2 3 0 0 0
+
+0 1 0 3 3 3 3 0 0 0
+
+0 1 0 0 0 0 0 0 0 0
+
+0 1 1 1 1 1 1 1 1 0
+
+0 0 0 0 0 0 0 0 0 0
