@@ -9,6 +9,8 @@ package com.sty.views
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.media.Camera;
+	
+	import data.MapData;
 
 	public class MapView extends Sprite
 	{
@@ -23,7 +25,7 @@ package com.sty.views
 		private var camera:CameraView
 		
 		//z
-		private var row:int = 2;
+		private var row:int = 10;
 		//x
 		private var col:int = 10;
 		
@@ -38,13 +40,20 @@ package com.sty.views
 			this.addChild(playerSp)
 			sizeInit();
 			mapSp.addChild(world);
+			
+			var map:Array = MapData.Maps[0];
 			for(var i:int = 0; i < world.cols; i++)
 			{
 				for(var j:int = 0; j < world.rows; j++)
 				{
-					var tile:DrawnIsoTile = new DrawnIsoTile(world.cellSize, 0xcccccc);
-					tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
-					world.addChildToFloor(tile);
+					var index:int = j * 10 + i
+					var value:int = map[index]
+					if (value != 0){
+						var tile:DrawnIsoTile = new DrawnIsoTile(world.cellSize, 0xcccccc);
+						tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
+						world.addChildToFloor(tile);
+					}
+					
 				}
 			}
 			addBox()
@@ -78,7 +87,7 @@ package com.sty.views
 			mapSp.x = -px
 			mapSp.y = -py		
 				
-			trace(world.hasFloor(playerBox))
+			var hasFloor:Boolean = world.hasFloor(playerBox)
 		}
 	}
 }
