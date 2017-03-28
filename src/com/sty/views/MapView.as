@@ -21,12 +21,19 @@ package com.sty.views
 		private var playerSp:Sprite
 		
 		private var camera:CameraView
+		
+		//z
+		private var row:int = 2;
+		//x
+		private var col:int = 10;
+		
+		private var cellSize:int = 50
 		public function MapView(_camera:CameraView)
 		{
 			camera   = _camera
 			mapSp	 = new Sprite()
 			playerSp = new Sprite();
-			world    = new IsoWorld(10,10,50);
+			world    = new IsoWorld(col,row,cellSize);
 			this.addChild(mapSp)
 			this.addChild(playerSp)
 			sizeInit();
@@ -63,13 +70,15 @@ package com.sty.views
 			playerBox.position = location
 		}
 		
-		public function onRender():void{
+		public function onRender():void{			
 			var p:Point = IsoUtils.isoToScreen(playerBox.position)
 			camera.track(p)
 			var px:Number = camera.location.x;
 			var py:Number = camera.location.y;
 			mapSp.x = -px
-			mapSp.y = -py
+			mapSp.y = -py		
+				
+			trace(world.hasFloor(playerBox))
 		}
 	}
 }

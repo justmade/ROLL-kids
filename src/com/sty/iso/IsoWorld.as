@@ -7,6 +7,7 @@ package com.sty.iso
 	{
 		private var _floor:Sprite;
 		private var _objects:Array;
+		private var _floors:Array;
 		private var _world:Sprite;
 		private var _cols:uint=10;
 		private var _rows:uint=10;
@@ -25,6 +26,7 @@ package com.sty.iso
 			_world = new Sprite();
 			addChild(_world);
 			_objects = new Array();
+			_floors = new Array();
 		}
 
 		public function set cellSize(v:uint):void{
@@ -74,6 +76,7 @@ package com.sty.iso
 
 		public function addChildToFloor(child:IsoObject):void
 		{
+			_floors.push(child);
 			_floor.addChild(child);
 		}
 
@@ -115,6 +118,18 @@ package com.sty.iso
 				}
 			}
 			return false;
+		}
+		
+		public function hasFloor(obj:IsoObject):Boolean{
+			var rect:Rectangle = obj.rect;
+			rect.offset(obj.vx,obj.vz);
+			for(var i:int = _floors.length -1 ; i >=0 ; i--){
+				var objB:IsoObject = _floors[i] as IsoObject;
+				if(rect.intersects(objB.rect)){
+					return true;
+				}
+			}
+			return false ;
 		}
 
 		//判断obj是否能继续向前移动
