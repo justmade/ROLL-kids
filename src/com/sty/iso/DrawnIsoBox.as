@@ -7,6 +7,8 @@ package com.sty.iso {
 	 */
 	public class DrawnIsoBox extends DrawnIsoTile {
 		
+		private var dropTimes:int;
+		
 		public function DrawnIsoBox(size:Number, color:uint, height:Number) {
 			
 			super(size, color, height);
@@ -55,6 +57,17 @@ package com.sty.iso {
 			graphics.lineTo(_size, 0);
 			graphics.lineTo(_size, -h);
 			graphics.endFill();
+		}
+		
+		public function drop():void{
+			dropTimes = 25		
+		}
+		
+		public function onRender():void{
+			if(dropTimes > 0){
+				this.position = new Point3D(x,y+20,z)
+				dropTimes -- ;
+			}
 		}
 	}
 }

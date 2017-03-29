@@ -30,6 +30,9 @@ package com.sty.views
 		private var col:int = 10;
 		
 		private var cellSize:int = 50
+		
+		private var playerDrop:Boolean = false
+			
 		public function MapView(_camera:CameraView)
 		{
 			camera   = _camera
@@ -48,10 +51,15 @@ package com.sty.views
 				{
 					var index:int = j * 10 + i
 					var value:int = map[index]
-					if (value != 0){
+					if (value == 2){
 						var tile:DrawnIsoTile = new DrawnIsoTile(world.cellSize, 0xcccccc);
 						tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToFloor(tile);
+						
+					}else if(value == 3){
+						var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, 0x00b021, world.cellSize);
+						box.position =new Point3D(i * world.cellSize, 0, j * world.cellSize);
+						world.addChildToWorld(box);
 					}
 					
 				}
@@ -75,7 +83,7 @@ package com.sty.views
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
-			var location:Point3D = new Point3D(playerBox.x + point_3d.x * (world.cellSize/20) , 0, playerBox.z + point_3d.z * (world.cellSize/20))
+			var location:Point3D = new Point3D(playerBox.x + point_3d.x * (world.cellSize/20) , playerBox.y, playerBox.z + point_3d.z * (world.cellSize/20))
 			playerBox.position = location
 		}
 		
@@ -88,6 +96,12 @@ package com.sty.views
 			mapSp.y = -py		
 				
 			var hasFloor:Boolean = world.hasFloor(playerBox)
+			if(!hasFloor && !playerDrop){
+				playerDrop = true
+				playerBox.drop();
+			}
+			playerBox.onRender();
+			
 		}
 	}
 }
