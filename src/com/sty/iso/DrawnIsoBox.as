@@ -9,10 +9,12 @@ package com.sty.iso {
 		
 		private var dropTimes:int;
 		
-		public function DrawnIsoBox(size:Number, color:uint, height:Number) {
+		
+		
+		public function DrawnIsoBox(size:Number, color:uint, height:Number , alpha:Number = 1 , type:String="") {
 			
-			super(size, color, height);
-			
+			super(size, color, height,alpha);
+			_type = type
 		}
 		
 		override protected function draw():void {
@@ -29,7 +31,7 @@ package com.sty.iso {
 			var h:Number=_height*Y_CORRECT;
 			
 			//顶部
-			graphics.beginFill(_color);
+			graphics.beginFill(_color,_alpha);
 			graphics.lineStyle(0, 0, .5);
 			graphics.moveTo(-_size, -h);
 			graphics.lineTo(0, -_size * .5 - h);
@@ -39,7 +41,7 @@ package com.sty.iso {
 			graphics.endFill();
 			
 			//左侧
-			graphics.beginFill(leftShadow);
+			graphics.beginFill(leftShadow,_alpha);
 			graphics.lineStyle(0, 0, .5);
 			graphics.moveTo(-_size, -h);
 			graphics.lineTo(0, _size * .5 - h);
@@ -49,7 +51,7 @@ package com.sty.iso {
 			graphics.endFill();
 			
 			//右侧
-			graphics.beginFill(rightShadow);
+			graphics.beginFill(rightShadow,_alpha);
 			graphics.lineStyle(0, 0, .5);
 			graphics.moveTo(_size, -h);
 			graphics.lineTo(0, _size * .5 - h);

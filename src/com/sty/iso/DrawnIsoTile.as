@@ -10,12 +10,15 @@ package com.sty.iso
 		protected var _height:Number;
 		
 		protected var _color:uint;
+		
+		protected var _alpha:Number
 
 		
-		public function DrawnIsoTile(size:Number,color:uint,height:Number=0) {
+		public function DrawnIsoTile(size:Number,color:uint,height:Number=0,alpha:Number=1) {
 			super(size);
 			_color=color;
 			_height=height;
+			_alpha = alpha
 			draw();
 		}
 		

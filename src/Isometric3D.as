@@ -27,8 +27,6 @@ package
 		
 		private var mapView:MapView;
 		
-		private var playerBox:DrawnIsoBox;
-		
 		private var cameraView:CameraView;
 
 		public function Isometric3D()

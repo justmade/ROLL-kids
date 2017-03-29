@@ -10,13 +10,16 @@ package com.sty.views
 	import flash.geom.Point;
 	import flash.media.Camera;
 	
+	import data.ElementType;
 	import data.MapData;
 
 	public class MapView extends Sprite
 	{
 		private var world:IsoWorld;
 		
-		private var playerBox:DrawnIsoBox;
+		private var hittestBox:DrawnIsoBox;
+		
+		private var playerBox:DrawnIsoBox
 		
 		private var mapSp:Sprite;
 		
@@ -65,7 +68,7 @@ package com.sty.views
 				}
 			}
 			addBox()
-			var p:Point = IsoUtils.isoToScreen(playerBox.position)
+			var p:Point = IsoUtils.isoToScreen(hittestBox.position)
 			camera.track(p)
 		}
 		
@@ -75,7 +78,13 @@ package com.sty.views
 		}
 		
 		private function addBox():void{
-			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize);
+			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,0.2,ElementType.PLAYER);
+			var pos:Point3D = new Point3D(0,0,0)
+			box.position = pos;
+			world.addChildToWorld(box);
+			hittestBox = box
+				
+			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,1,ElementType.PLAYER);
 			var pos:Point3D = new Point3D(0,0,0)
 			box.position = pos;
 			world.addChildToWorld(box);
@@ -83,8 +92,16 @@ package com.sty.views
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
-			var location:Point3D = new Point3D(playerBox.x + point_3d.x * (world.cellSize/20) , playerBox.y, playerBox.z + point_3d.z * (world.cellSize/20))
-			playerBox.position = location
+			var location:Point3D = new Point3D(hittestBox.x + point_3d.x * (world.cellSize/20) , hittestBox.y, hittestBox.z + point_3d.z * (world.cellSize/20))
+			hittestBox.position = location
+			var canMove:Boolean =  world.canMove(hittestBox)	
+			if(canMove){
+				playerBox.position = location
+			}else{
+				location = new Point3D(hittestBox.x - point_3d.x * (world.cellSize/20) , hittestBox.y, hittestBox.z - point_3d.z * (world.cellSize/20))
+				hittestBox.position = location
+			}
+			world.sort()
 		}
 		
 		public function onRender():void{			
@@ -93,14 +110,16 @@ package com.sty.views
 			var px:Number = camera.location.x;
 			var py:Number = camera.location.y;
 			mapSp.x = -px
-			mapSp.y = -py		
+			mapSp.y = -py	
 				
-			var hasFloor:Boolean = world.hasFloor(playerBox)
+			var hasFloor:Boolean = world.hasFloor(hittestBox)
 			if(!hasFloor && !playerDrop){
 				playerDrop = true
+				hittestBox.drop();
 				playerBox.drop();
 			}
-			playerBox.onRender();
+			hittestBox.onRender();
+			playerBox.drop();
 			
 		}
 	}

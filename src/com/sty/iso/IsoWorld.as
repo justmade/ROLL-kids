@@ -55,14 +55,14 @@ package com.sty.iso
 
 		public function addChildToWorld(child:IsoObject):void
 		{
-			//检测box的位置是否挂出去了+重复创建检测
-			if(_deleteCell){
-				deletePos(child.position);
-				return ;
-			}
+//			//检测box的位置是否挂出去了+重复创建检测
+//			if(_deleteCell){
+//				deletePos(child.position);
+//				return ;
+//			}
 
 			if (child.position.x<0 || child.position.x>(_cols-1)*_cellSize ||
-				child.position.z<0 || child.position.z>(_rows-1)*_cellSize||childPosExist(child.position) ){
+				child.position.z<0 || child.position.z>(_rows-1)*_cellSize){
 				return;
 
 			}else{
@@ -140,7 +140,7 @@ package com.sty.iso
 			for(var i:int = 0; i < _objects.length; i++)
 			{
 				var objB:IsoObject = _objects[i] as IsoObject;
-				if(obj != objB && !objB.walkable && rect.intersects(objB.rect))
+				if(obj != objB && !objB.walkable && rect.intersects(objB.rect) && obj._type != objB._type)
 				{
 					return false;
 				}

@@ -12,6 +12,7 @@ package com.sty.iso {
 		protected var _vy:Number = 0;
 		protected var _vz:Number = 0;
 		protected var _roadType:String
+		public var _type:String = ""
 		
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
 		
