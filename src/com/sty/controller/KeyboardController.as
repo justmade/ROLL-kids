@@ -10,9 +10,9 @@ package com.sty.controller
 	public class KeyboardController
 	{
 		private var mStage:Stage;
-		private var _x:int;
-		private var _y:int;
-		private var _z:int;
+		private var _x:Number;
+		private var _y: Number;
+		private var _z: Number;
 		private var RL:int;
 		private var UD:int;
 		private var U:Boolean;
@@ -113,7 +113,8 @@ package com.sty.controller
 			if(RL == 1){
 				_x = 1;
 				if(UD == 0){
-					_z = -1;
+					_x = 1/Math.SQRT2
+					_z = -1/Math.SQRT2;
 				}else if(UD == 1){
 					_z = 0	
 				}else if(UD == -1){
@@ -123,7 +124,8 @@ package com.sty.controller
 			}else if(RL == -1){
 				_x = -1;
 				if(UD == 0){
-					_z = 1;
+					_x = -1/Math.SQRT2
+					_z = 1/Math.SQRT2;
 				}else if(UD == 1){
 					_x = 0
 					_z = 1	
