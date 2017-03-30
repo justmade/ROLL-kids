@@ -2,6 +2,7 @@ package com.sty.views
 {
 	import com.sty.iso.DrawnIsoBox;
 	import com.sty.iso.DrawnIsoTile;
+	import com.sty.iso.GraphicTile;
 	import com.sty.iso.IsoUtils;
 	import com.sty.iso.IsoWorld;
 	import com.sty.iso.Point3D;
@@ -15,6 +16,9 @@ package com.sty.views
 
 	public class MapView extends Sprite
 	{
+		[Embed(source="../../../grass.png")]
+		private var Tile_Grass:Class
+		
 		private var world:IsoWorld;
 		
 		private var hittestBox:DrawnIsoBox;
@@ -32,7 +36,7 @@ package com.sty.views
 		//x
 		private var col:int = 10;
 		
-		private var cellSize:int = 50
+		private var cellSize:int = 40
 		
 		private var playerDrop:Boolean = false
 			
@@ -55,7 +59,7 @@ package com.sty.views
 					var index:int = j * 10 + i
 					var value:int = map[index]
 					if (value == 2){
-						var tile:DrawnIsoTile = new DrawnIsoTile(world.cellSize, 0xcccccc);
+						var tile:GraphicTile = new GraphicTile(world.cellSize, Tile_Grass, 40, 35);
 						tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToFloor(tile);
 						
