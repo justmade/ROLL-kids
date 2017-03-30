@@ -19,6 +19,9 @@ package com.sty.views
 		[Embed(source="../../../grass.png")]
 		private var Tile_Grass:Class
 		
+		[Embed(source="../../../stone.png")]
+		private var Tile_Stone:Class
+		
 		private var world:IsoWorld;
 		
 		private var hittestBox:DrawnIsoBox;
@@ -58,13 +61,14 @@ package com.sty.views
 				{
 					var index:int = j * 10 + i
 					var value:int = map[index]
-					if (value == 2){
-						var tile:GraphicTile = new GraphicTile(world.cellSize, Tile_Grass, 40, 35);
+					if (value != 0){
+						var tile:GraphicTile = new GraphicTile(40, Tile_Grass, 40, 20);
 						tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToFloor(tile);
 						
-					}else if(value == 3){
-						var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, 0x00b021, world.cellSize);
+					}
+					if(value == 3){
+						var box:GraphicTile = new GraphicTile(40, Tile_Stone, 40, 71);
 						box.position =new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToWorld(box);
 					}
@@ -82,7 +86,7 @@ package com.sty.views
 		}
 		
 		private function addBox():void{
-			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,0.2,ElementType.PLAYER);
+			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,0.0,ElementType.PLAYER);
 			var pos:Point3D = new Point3D(0,0,0)
 			box.position = pos;
 			world.addChildToWorld(box);
