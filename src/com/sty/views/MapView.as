@@ -86,13 +86,13 @@ package com.sty.views
 		}
 		
 		private function addBox():void{
-			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,0.0,ElementType.PLAYER);
+			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize/2, Math.random() * 0xffffff, world.cellSize/2,0.0,ElementType.PLAYER);
 			var pos:Point3D = new Point3D(0,0,0)
 			box.position = pos;
 			world.addChildToWorld(box);
 			hittestBox = box
 				
-			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize, Math.random() * 0xffffff, world.cellSize,1,ElementType.PLAYER);
+			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize/2, Math.random() * 0xffffff, world.cellSize/2,1,ElementType.PLAYER);
 			var pos:Point3D = new Point3D(0,0,0)
 			box.position = pos;
 			world.addChildToWorld(box);
