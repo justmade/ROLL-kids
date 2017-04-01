@@ -144,7 +144,9 @@ package com.sty.iso {
 			}
 			_acceleration.y -= _g
 			this.vy += _acceleration.y
-			this.y += this.vy
+			this.y += this.vy;
+			this.x += this.vx;
+			this.z += this.vz;
 			_acceleration.y  = 0
 		}
 	}

@@ -119,14 +119,20 @@ package com.sty.views
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
-			var location:Point3D = new Point3D(hittestBox.x + point_3d.x * (world.cellSize/20) , hittestBox.y, hittestBox.z + point_3d.z * (world.cellSize/20))
-			hittestBox.position = location
+			hittestBox.vx = point_3d.x * (world.cellSize/20)
+			hittestBox.vz = point_3d.z * (world.cellSize/20)
+			hittestBox.onRender();
+			playerBox.onRender();
+			trace(hittestBox.vx)
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
-				playerBox.position = location
+				playerBox.vx = point_3d.x * (world.cellSize/20)
+				playerBox.vz = point_3d.z * (world.cellSize/20)
 			}else{
-				location = new Point3D(hittestBox.x - point_3d.x * (world.cellSize/20) , hittestBox.y, hittestBox.z - point_3d.z * (world.cellSize/20))
-				hittestBox.position = location
+				playerBox.vx = 0
+				playerBox.vz = 0
+				hittestBox.vx = -point_3d.x * (world.cellSize/20)
+				hittestBox.vz = -point_3d.z * (world.cellSize/20)
 			}
 			world.sort()
 		}
@@ -146,7 +152,7 @@ package com.sty.views
 				playerBox.drop();
 			}
 			hittestBox.onRender();
-			playerBox.drop();
+			playerBox.onRender();
 			
 			for(var i:int = 0 ; i < enemys.length ; i ++){
 				enemys[i].onRender();
