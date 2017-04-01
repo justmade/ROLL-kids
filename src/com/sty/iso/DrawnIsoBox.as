@@ -65,7 +65,8 @@ package com.sty.iso {
 			dropTimes = 25		
 		}
 		
-		public function onRender():void{
+		override public function onRender():void{
+			super.onRender();
 			if(dropTimes > 0){
 				this.position = new Point3D(x,y+20,z)
 				dropTimes -- ;

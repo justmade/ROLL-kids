@@ -11,7 +11,10 @@ package com.sty.iso {
 		protected var _vx:Number = 0;
 		protected var _vy:Number = 0;
 		protected var _vz:Number = 0;
+		protected var _g:Number = -0.1
+		protected var jumpAcc:Number = -1.6
 		protected var _roadType:String
+		protected var _acceleration:Point3D;
 		public var _type:String = ""
 		
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
@@ -19,6 +22,7 @@ package com.sty.iso {
 		public function IsoObject(size:Number) {
 			_size=size;
 			_position = new Point3D();
+			_acceleration = new Point3D();
 			updateScreenPosition();
 		}
 		
@@ -125,6 +129,23 @@ package com.sty.iso {
 		public function set roadType(value:String):void
 		{
 			_roadType = value;
+		}
+		
+		public function jump():void{
+			jumpAcc = -0.3 * Math.random() - 1.3
+			_acceleration.y += jumpAcc
+		}
+		
+		public function onRender():void{
+			if(this.y >= 0){
+				this.y = 0
+				_acceleration.y += _g
+				jump()
+			}
+			_acceleration.y -= _g
+			this.vy += _acceleration.y
+			this.y += this.vy
+			_acceleration.y  = 0
 		}
 	}
 }

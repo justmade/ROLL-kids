@@ -3,6 +3,7 @@ package com.sty.views
 	import com.sty.iso.DrawnIsoBox;
 	import com.sty.iso.DrawnIsoTile;
 	import com.sty.iso.GraphicTile;
+	import com.sty.iso.IsoObject;
 	import com.sty.iso.IsoUtils;
 	import com.sty.iso.IsoWorld;
 	import com.sty.iso.Point3D;
@@ -43,15 +44,20 @@ package com.sty.views
 		
 		private var playerDrop:Boolean = false
 			
+		private var emptyPlace:Array ;
+		
+		private var enemys:Vector.<IsoObject>;
+			
 		public function MapView(_camera:CameraView)
 		{
 			camera   = _camera
 			mapSp	 = new Sprite()
 			playerSp = new Sprite();
 			world    = new IsoWorld(col,row,cellSize);
+			emptyPlace = new Array()
+			enemys = new Vector.<IsoObject>;
 			this.addChild(mapSp)
 			this.addChild(playerSp)
-			sizeInit();
 			mapSp.addChild(world);
 			
 			var map:Array = MapData.Maps[0];
@@ -72,20 +78,19 @@ package com.sty.views
 						box.position =new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToWorld(box);
 					}
+					if(value == 2){
+						emptyPlace.push(new Point(i,j))
+					}
 					
 				}
 			}
-			addBox()
+			addPlayer()
+			addEnemy()
 			var p:Point = IsoUtils.isoToScreen(hittestBox.position)
 			camera.track(p)
 		}
 		
-		private function sizeInit():void{
-//			world.x = 1280 / 2;
-//			world.y = 720 /2;
-		}
-		
-		private function addBox():void{
+		private function addPlayer():void{
 			var box:DrawnIsoBox = new DrawnIsoBox(world.cellSize/2, Math.random() * 0xffffff, world.cellSize/2,0.0,ElementType.PLAYER);
 			var pos:Point3D = new Point3D(0,0,0)
 			box.position = pos;
@@ -97,6 +102,20 @@ package com.sty.views
 			box.position = pos;
 			world.addChildToWorld(box);
 			playerBox = box
+		}
+		
+		private function addEnemy():void{
+			for(var i:int = 0 ; i < 5 ; i++){
+				var index:int = emptyPlace.length * Math.random();
+				var value:Point = emptyPlace[index];
+				emptyPlace.splice(index,1);
+				var enemy:DrawnIsoBox = new DrawnIsoBox(world.cellSize/2, 0xff0000, world.cellSize/2,1,ElementType.ENEMY)
+				var pos:Point3D = new Point3D(value.x * world.cellSize, 0, value.y * world.cellSize)
+				enemy.position = pos;
+				world.addChildToWorld(enemy);
+				
+				enemys.push(enemy)
+			}
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
@@ -129,6 +148,9 @@ package com.sty.views
 			hittestBox.onRender();
 			playerBox.drop();
 			
+			for(var i:int = 0 ; i < enemys.length ; i ++){
+				enemys[i].onRender();
+			}
 		}
 	}
 }
