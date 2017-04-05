@@ -62,15 +62,11 @@ package com.sty.iso {
 		}
 		
 		public function drop():void{
-			dropTimes = 25		
+			isDrop = true
 		}
 		
 		override public function onRender():void{
-			super.onRender();
-			if(dropTimes > 0){
-				this.position = new Point3D(x,y-20,z)
-				dropTimes -- ;
-			}
+			super.onRender();			
 		}
 	}
 }

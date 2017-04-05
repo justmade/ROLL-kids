@@ -128,7 +128,6 @@ package com.sty.views
 				playerBox.vx = point_3d.x * (world.cellSize/20)
 				playerBox.vz = point_3d.z * (world.cellSize/20)
 			}else{
-				trace("stop")
 				playerBox.vx = 0
 				playerBox.vz = 0
 				hittestBox.vx = -point_3d.x * (world.cellSize/20)
@@ -140,6 +139,9 @@ package com.sty.views
 		public function onRender():void{
 			//平时不跟随跳动
 			var playerPos:Point3D = new Point3D(playerBox.position.x,0,playerBox.position.z)
+			if(playerBox.isDrop){
+				playerPos = new Point3D(playerBox.position.x,playerBox.position.y,playerBox.position.z)
+			}
 			var p:Point = IsoUtils.isoToScreen(playerPos)
 			camera.track(p)
 			var px:Number = camera.location.x;

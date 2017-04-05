@@ -11,11 +11,12 @@ package com.sty.iso {
 		protected var _vx:Number = 0;
 		protected var _vy:Number = 0;
 		protected var _vz:Number = 0;
-		protected var _g:Number = -0.1
+		protected var _g:Number = 0.1
 		protected var jumpAcc:Number = -1.6
 		protected var _roadType:String
 		protected var _acceleration:Point3D;
 		public var _type:String = ""
+		public var isDrop:Boolean = false;
 		
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
 		
@@ -137,12 +138,12 @@ package com.sty.iso {
 		}
 		
 		public function onRender():void{
-			if(this.y >= 0){
+			if(this.y >= 0 && isDrop == false){
 				this.y = 0
-				_acceleration.y += _g
+				_acceleration.y -= _g
 				jump()
 			}
-			_acceleration.y -= _g
+			_acceleration.y += _g
 			this.vy += _acceleration.y
 			this.y += this.vy;
 			this.x += this.vx;
