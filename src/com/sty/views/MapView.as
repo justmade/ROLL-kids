@@ -123,12 +123,12 @@ package com.sty.views
 			hittestBox.vz = point_3d.z * (world.cellSize/20)
 			hittestBox.onRender();
 			playerBox.onRender();
-			trace(hittestBox.vx)
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
 				playerBox.vx = point_3d.x * (world.cellSize/20)
 				playerBox.vz = point_3d.z * (world.cellSize/20)
 			}else{
+				trace("stop")
 				playerBox.vx = 0
 				playerBox.vz = 0
 				hittestBox.vx = -point_3d.x * (world.cellSize/20)
@@ -137,8 +137,10 @@ package com.sty.views
 			world.sort()
 		}
 		
-		public function onRender():void{			
-			var p:Point = IsoUtils.isoToScreen(playerBox.position)
+		public function onRender():void{
+			//平时不跟随跳动
+			var playerPos:Point3D = new Point3D(playerBox.position.x,0,playerBox.position.z)
+			var p:Point = IsoUtils.isoToScreen(playerPos)
 			camera.track(p)
 			var px:Number = camera.location.x;
 			var py:Number = camera.location.y;

@@ -132,7 +132,7 @@ package com.sty.iso {
 		}
 		
 		public function jump():void{
-			jumpAcc = -0.3 * Math.random() - 1.3
+//			jumpAcc = -0.3 * Math.random() - 1.3
 			_acceleration.y += jumpAcc
 		}
 		
