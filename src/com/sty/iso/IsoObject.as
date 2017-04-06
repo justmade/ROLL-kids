@@ -137,12 +137,25 @@ package com.sty.iso {
 			_acceleration.y += jumpAcc
 		}
 		
+		/**
+		 *如果掉出屏幕了，再放回屏幕 
+		 * 
+		 */		
+		private function dropOutScreen():void{
+			if(this.position.y >= 500 && isDrop){
+				this.position.y = -500
+				this.position.x = 0
+				this.position.z = 0
+			}
+		}
+		
 		public function onRender():void{
 			if(this.y >= 0 && isDrop == false){
 				this.y = 0
 				_acceleration.y -= _g
 				jump()
 			}
+			dropOutScreen()			
 			_acceleration.y += _g
 			this.vy += _acceleration.y
 			this.y += this.vy;

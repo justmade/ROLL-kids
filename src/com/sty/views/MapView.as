@@ -150,10 +150,13 @@ package com.sty.views
 			mapSp.y = -py	
 				
 			var hasFloor:Boolean = world.hasFloor(hittestBox)
-			if(!hasFloor && !playerDrop){
-				playerDrop = true
+			if(!hasFloor){
 				hittestBox.drop();
 				playerBox.drop();
+			
+			}else if(hasFloor && playerPos.y >= 0){
+				playerBox.isDrop = false
+				hittestBox.isDrop = false
 			}
 			hittestBox.onRender();
 			playerBox.onRender();
