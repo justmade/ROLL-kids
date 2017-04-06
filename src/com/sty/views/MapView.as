@@ -1,7 +1,9 @@
 package com.sty.views
 {
+	import com.sty.astar.AStar;
+	import com.sty.astar.Grid;
+	import com.sty.astar.Node;
 	import com.sty.iso.DrawnIsoBox;
-	import com.sty.iso.DrawnIsoTile;
 	import com.sty.iso.GraphicTile;
 	import com.sty.iso.IsoObject;
 	import com.sty.iso.IsoUtils;
@@ -10,7 +12,6 @@ package com.sty.views
 	
 	import flash.display.Sprite;
 	import flash.geom.Point;
-	import flash.media.Camera;
 	
 	import data.ElementType;
 	import data.MapData;
@@ -47,6 +48,9 @@ package com.sty.views
 		private var emptyPlace:Array ;
 		
 		private var enemys:Vector.<IsoObject>;
+		
+		private var astarGrid:Grid;
+		private var gridSp:Sprite;
 			
 		public function MapView(_camera:CameraView)
 		{
@@ -56,6 +60,9 @@ package com.sty.views
 			world    = new IsoWorld(col,row,cellSize);
 			emptyPlace = new Array()
 			enemys = new Vector.<IsoObject>;
+			astarGrid = new Grid()
+			astarGrid.creatGrid(col,row)
+			
 			this.addChild(mapSp)
 			this.addChild(playerSp)
 			mapSp.addChild(world);
@@ -71,23 +78,57 @@ package com.sty.views
 						var tile:GraphicTile = new GraphicTile(40, Tile_Grass, 40, 20);
 						tile.position = new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToFloor(tile);
-						
 					}
+					//障碍物
 					if(value == 3){
 						var box:GraphicTile = new GraphicTile(40, Tile_Stone, 40, 71);
 						box.position =new Point3D(i * world.cellSize, 0, j * world.cellSize);
 						world.addChildToWorld(box);
+						astarGrid.setWalkAble(i,j,false)
 					}
 					if(value == 2){
 						emptyPlace.push(new Point(i,j))
 					}
+					if(value == 0){
+						astarGrid.setWalkAble(i,j,false)
+					}
 					
 				}
 			}
+			gridSp = new Sprite();
+			this.addChild(gridSp);
+			drawGird();
 			addPlayer()
 			addEnemy()
 			var p:Point = IsoUtils.isoToScreen(hittestBox.position)
 			camera.track(p)
+			
+			
+			
+			
+		}
+		
+		private function drawGird():void{
+			gridSp.graphics.clear()
+			var arr:Array = astarGrid.nodeArrayList ; 
+			for(var i:int = 0 ; i < astarGrid.gridRowNum ; i++){
+				for(var j:int = 0 ; j < astarGrid.gridLineNum ; j++){
+					var node:Node = arr[i][j];
+					gridSp.graphics.lineStyle(0);
+					gridSp.graphics.beginFill(getNodeColor(node),0.5);
+					gridSp.graphics.drawRect(i*cellSize/2 , j *cellSize/2 , cellSize/2 , cellSize/2);
+				}
+			}
+		}
+		private function getNodeColor(_node:Node):uint
+		{
+			if(_node == astarGrid.startNode){return 0xff0000};
+			if(_node == astarGrid.endNode){return 0xff0000} ;
+			if(!_node.walkable){return 0x000000}
+			if(_node.isPath){return 0x0000ff};
+			if(_node.isFind){return 0x333333};
+			return 0x00ff00 ;
+			
 		}
 		
 		private function addPlayer():void{
@@ -116,6 +157,25 @@ package com.sty.views
 				
 				enemys.push(enemy)
 			}
+			astarGrid.setStartNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
+			trace(astarGrid.startNode._x,astarGrid.startNode._y)
+			astarGrid.setEndNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
+			trace(astarGrid.endNode._x,astarGrid.endNode._y)
+			onPath()
+			drawGird()
+		}
+		
+		private function onPath():void{
+			var asta:AStar = new AStar();
+			if(asta.setGrid(astarGrid)){
+				var parr:Array = asta.getPath() ; 
+				var opens:Array = asta.getOpens();
+				for(var i:int = 0 ; i <parr.length; i++){
+					parr[i].isPath = true ;
+				}
+				drawGird();
+			}
+			
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
