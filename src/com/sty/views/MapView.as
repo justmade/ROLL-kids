@@ -142,7 +142,7 @@ package com.sty.views
 		}
 		
 		private function addEnemy():void{
-			for(var i:int = 0 ; i < 5 ; i++){
+			for(var i:int = 0 ; i < 1 ; i++){
 				var index:int = emptyPlace.length * Math.random();
 				var value:Point = emptyPlace[index];
 				emptyPlace.splice(index,1);
@@ -152,8 +152,9 @@ package com.sty.views
 				world.addChildToWorld(enemy);
 				
 				enemys.push(enemy)
-				astarGrid.setStartNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
-				astarGrid.setEndNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
+				astarGrid.setStartNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
+				astarGrid.setEndNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
+				trace(enemy.position.x ,enemy.position.z)
 				var path:Array = onPath();
 				enemy.movePath = path;
 			}
@@ -168,9 +169,11 @@ package com.sty.views
 				var opens:Array = asta.getOpens();
 				for(var i:int = 0 ; i <parr.length; i++){
 					parr[i].isPath = true ;
-					posArr.push(parr[i]._x,parr[i]._y);
+					posArr.push(new Point(parr[i]._x * world.cellSize,parr[i]._y * world.cellSize));
 				}
 				drawGird();
+				posArr.pop()
+				trace(posArr)
 				return posArr;
 			}
 			return null;

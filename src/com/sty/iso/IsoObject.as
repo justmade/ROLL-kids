@@ -1,4 +1,6 @@
 package com.sty.iso {
+	import com.sty.math.Vector2D;
+	
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -150,12 +152,31 @@ package com.sty.iso {
 			}
 		}
 		
+		private function searchPlayer():void{
+			if(movePath && movePath.length>0){
+				var closePoint:Point = movePath[movePath.length-1];
+//				var p3d:Point3D = IsoUtils.screenToIso(closePoint)
+				var v:Vector2D = new Vector2D(closePoint.x - this.x , closePoint.y - this.z)
+				if(v.length <= 1){
+					movePath.pop()
+				}
+				var vel:Vector2D = v.normalize().multiply(1)	
+				this.vx = vel.x;
+				this.vz = vel.y;
+				if(movePath.length == 0){
+					this.vx = 0;
+					this.vz = 0;
+				}
+			}
+		}
+		
 		public function onRender():void{
 			if(this.y >= 0 && isDrop == false){
 				this.y = 0
 				_acceleration.y -= _g
 				jump()
 			}
+			searchPlayer()
 			dropOutScreen()			
 			_acceleration.y += _g
 			this.vy += _acceleration.y
