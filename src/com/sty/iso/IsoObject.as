@@ -20,6 +20,7 @@ package com.sty.iso {
 		public var _type:String = ""
 		public var isDrop:Boolean = false;
 		public var movePath:Array
+		private var lastGrid:Point = new Point()
 		
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
 		
@@ -155,7 +156,6 @@ package com.sty.iso {
 		private function searchPlayer():void{
 			if(movePath && movePath.length>0){
 				var closePoint:Point = movePath[movePath.length-1];
-//				var p3d:Point3D = IsoUtils.screenToIso(closePoint)
 				var v:Vector2D = new Vector2D(closePoint.x - this.x , closePoint.y - this.z)
 				if(v.length <= 1){
 					movePath.pop()
@@ -168,6 +168,16 @@ package com.sty.iso {
 					this.vz = 0;
 				}
 			}
+		}
+		
+		public function gridChange(_worldSize:int):Boolean{
+			var cx:int = Math.floor(this.x/_worldSize)
+			var cy:int = Math.floor(this.z/_worldSize)
+			if(!lastGrid.equals(new Point(cx,cy))){
+				lastGrid = new Point(cx,cy)
+				return false
+			}
+			return true
 		}
 		
 		public function onRender():void{
