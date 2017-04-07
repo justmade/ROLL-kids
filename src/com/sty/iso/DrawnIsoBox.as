@@ -9,8 +9,6 @@ package com.sty.iso {
 		
 		private var dropTimes:int;
 		
-		
-		
 		public function DrawnIsoBox(size:Number, color:uint, height:Number , alpha:Number = 1 , type:String="") {
 			
 			super(size, color, height,alpha);

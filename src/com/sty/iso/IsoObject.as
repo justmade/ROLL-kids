@@ -17,6 +17,7 @@ package com.sty.iso {
 		protected var _acceleration:Point3D;
 		public var _type:String = ""
 		public var isDrop:Boolean = false;
+		public var movePath:Array
 		
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
 		

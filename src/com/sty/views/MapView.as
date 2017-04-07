@@ -102,10 +102,6 @@ package com.sty.views
 			addEnemy()
 			var p:Point = IsoUtils.isoToScreen(hittestBox.position)
 			camera.track(p)
-			
-			
-			
-			
 		}
 		
 		private function drawGird():void{
@@ -156,26 +152,28 @@ package com.sty.views
 				world.addChildToWorld(enemy);
 				
 				enemys.push(enemy)
+				astarGrid.setStartNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
+				astarGrid.setEndNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
+				var path:Array = onPath();
+				enemy.movePath = path;
 			}
-			astarGrid.setStartNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
-			trace(astarGrid.startNode._x,astarGrid.startNode._y)
-			astarGrid.setEndNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
-			trace(astarGrid.endNode._x,astarGrid.endNode._y)
-			onPath()
-			drawGird()
+			
 		}
 		
-		private function onPath():void{
+		private function onPath():Array{
 			var asta:AStar = new AStar();
 			if(asta.setGrid(astarGrid)){
 				var parr:Array = asta.getPath() ; 
+				var posArr:Array = []
 				var opens:Array = asta.getOpens();
 				for(var i:int = 0 ; i <parr.length; i++){
 					parr[i].isPath = true ;
+					posArr.push(parr[i]._x,parr[i]._y);
 				}
 				drawGird();
+				return posArr;
 			}
-			
+			return null;
 		}
 		
 		public function setKeyPoint(point_3d:Point3D):void{
