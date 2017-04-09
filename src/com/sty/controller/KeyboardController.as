@@ -1,4 +1,4 @@
-package com.sty.controller
+﻿package com.sty.controller
 {
 	import com.sty.iso.Point3D;
 	
@@ -19,6 +19,7 @@ package com.sty.controller
 		private var D:Boolean;
 		private var L:Boolean;
 		private var R:Boolean;
+		private var SP:int = 1
 		public function KeyboardController(_stage:Stage)
 		{
 			mStage = _stage;
@@ -30,28 +31,33 @@ package com.sty.controller
 		{
 			switch(event.keyCode)
 			{
-				case Keyboard.UP:
+				case Keyboard.W:
 				{
 					U = true
 					UD = -1
 					break;
 				}
-				case Keyboard.DOWN:
+				case Keyboard.S:
 				{
 					D = true
 					UD = 1
 					break;
 				}
-				case Keyboard.LEFT:
+				case Keyboard.A:
 				{
 					L = true
 					RL =-1
 					break;
 				}
-				case Keyboard.RIGHT:
+				case Keyboard.D:
 				{
 					RL = 1 
 					R = true
+					break;
+				}
+				case Keyboard.SPACE:{
+					trace("sp down")
+					SP = 3;
 					break;
 				}
 			}
@@ -61,7 +67,7 @@ package com.sty.controller
 		{
 			switch(event.keyCode)
 			{
-				case Keyboard.UP:
+				case Keyboard.W:
 				{
 					U = false
 					if(D == true){
@@ -71,7 +77,7 @@ package com.sty.controller
 					}
 					break;
 				}
-				case Keyboard.DOWN:
+				case Keyboard.S:
 				{
 					D = false
 					if(U){
@@ -81,7 +87,7 @@ package com.sty.controller
 					}
 					break;
 				}
-				case Keyboard.LEFT:
+				case Keyboard.A:
 				{
 					L = false
 					if(R){
@@ -91,7 +97,7 @@ package com.sty.controller
 					}
 					break;
 				}
-				case Keyboard.RIGHT:
+				case Keyboard.D:
 				{
 					R = false
 					if(L){
@@ -99,6 +105,12 @@ package com.sty.controller
 					}else{
 						RL = 0
 					}
+					break;
+				}
+				case Keyboard.SPACE:
+				{
+					trace("sp up")
+					SP = 1;
 					break;
 				}
 			}
@@ -144,7 +156,8 @@ package com.sty.controller
 					_z = -1
 				}
 			}
-			return new Point3D(_x,0,_z)
+			var p =  new Point3D(_x * SP,0,_z*SP);
+			return p
 		}
 	}
 }
