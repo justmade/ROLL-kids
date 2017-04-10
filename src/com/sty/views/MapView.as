@@ -178,11 +178,12 @@ package com.sty.views
 			return null;
 		}
 		
-		public function setKeyPoint(point_3d:Point3D):void{
+		public function setKeyPoint(point_3d:Point3D,dir:int):void{
 			hittestBox.vx = point_3d.x * (world.cellSize/20)
 			hittestBox.vz = point_3d.z * (world.cellSize/20)
 			hittestBox.onRender();
 			playerBox.onRender();
+			playerBox.setDirection(dir)
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
 				playerBox.vx = point_3d.x * (world.cellSize/20)

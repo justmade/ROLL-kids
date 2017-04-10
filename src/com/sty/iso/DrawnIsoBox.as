@@ -1,4 +1,6 @@
 package com.sty.iso {
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	
 	/**
 	 *有颜色的立方体 
@@ -7,12 +9,18 @@ package com.sty.iso {
 	 */
 	public class DrawnIsoBox extends DrawnIsoTile {
 		
+		[Embed(source="../../../close-weapon.png")]
+		private var Close_Weapon:Class
+		
 		private var dropTimes:int;
+		
+		private var currentWeapon:Sprite = new Sprite();
 		
 		public function DrawnIsoBox(size:Number, color:uint, height:Number , alpha:Number = 1 , type:String="") {
 			
 			super(size, color, height,alpha);
 			_type = type
+			addCloseWeapon()
 		}
 		
 		override protected function draw():void {
@@ -59,9 +67,24 @@ package com.sty.iso {
 			graphics.endFill();
 		}
 		
+		public function addCloseWeapon():void
+		{
+			var weapon:DisplayObject = new Close_Weapon() as DisplayObject
+			currentWeapon.addChild(weapon)
+			weapon.x = 0;
+			weapon.y = -weapon.height/2;
+			this.addChild(currentWeapon)
+			setDirection(1)
+		}
+		
 		public function drop():void{
 			isDrop = true
 		}
+		
+		public function setDirection(dir:int):void{
+			currentWeapon.rotation = (dir-1)*45;
+		}
+		
 		
 		override public function onRender():void{
 			super.onRender();			

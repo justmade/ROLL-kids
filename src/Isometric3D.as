@@ -45,7 +45,8 @@ package
 		protected function onRender(event:Event):void
 		{
 			var point_3d:Point3D = keyController.getKeyboard()
-			mapView.setKeyPoint(point_3d)
+			var dir:int = keyController.getDirection();
+			mapView.setKeyPoint(point_3d,dir)
 			mapView.onRender();
 			cameraView.onTween();
 //			var location:Point3D = new Point3D(playerBox.x + point_3d.x * (world.cellSize/20) , 0, playerBox.z + point_3d.z * (world.cellSize/20))
