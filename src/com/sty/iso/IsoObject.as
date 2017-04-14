@@ -213,9 +213,9 @@ package com.sty.iso {
 			_acceleration.z = 0
 		}
 		
-		public function attacked():void{
-			_acceleration.x = -13 * this.vx/Math.abs(this.vx)
-			_acceleration.z = -13 * this.vz/Math.abs(this.vz)
+		public function attacked(_x:Number,_y:Number):void{
+			if(_x!=0)_acceleration.x = 13 * _x / Math.abs(_x)
+			if(_y!=0)_acceleration.z = 13 * _y / Math.abs(_y)
 		}
 	}
 }

@@ -131,22 +131,29 @@ package com.sty.iso
 			}
 			return false ;
 		}
+		
+		public function attackJudge(obj:IsoObject):Boolean{
+			var weaponRect:Rectangle = obj.weapon;
+			weaponRect.offset(obj.vx,obj.vz);
+			for(var i:int = 0; i < _objects.length; i++)
+			{
+				var objB:IsoObject = _objects[i] as IsoObject;				
+				if(obj != objB && weaponRect.intersects(objB.rect) && obj._type != objB._type){
+					objB.attacked(obj.vx,obj.vz)
+					return true
+				}						
+			}
+			return false;
+		}
 
 		//判断obj是否能继续向前移动
 		public function canMove(obj:IsoObject):Boolean
 		{
 			var rect:Rectangle = obj.rect;
 			rect.offset(obj.vx, obj.vz);
-			var weaponRect:Rectangle = obj.weapon;
-			weaponRect.offset(obj.vx,obj.vz);
 			for(var i:int = 0; i < _objects.length; i++)
 			{
-				var objB:IsoObject = _objects[i] as IsoObject;
-				
-				if(obj != objB && weaponRect.intersects(objB.rect) && obj._type != objB._type){
-					return false
-				}
-				
+				var objB:IsoObject = _objects[i] as IsoObject;				
 				if(obj != objB && !objB.walkable && rect.intersects(objB.rect) && obj._type != objB._type)
 				{
 					return false;
