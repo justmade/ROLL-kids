@@ -211,6 +211,7 @@ package com.sty.iso {
 			_acceleration.x = 0
 			_acceleration.y = 0
 			_acceleration.z = 0 
+				
 		}
 		
 		public function attacked(_x:Number,_y:Number):void{
