@@ -210,7 +210,7 @@ package com.sty.iso {
 			this.z += this.vz;
 			_acceleration.x = 0
 			_acceleration.y = 0
-			_acceleration.z = 0
+			_acceleration.z = 0 
 		}
 		
 		public function attacked(_x:Number,_y:Number):void{
