@@ -1,6 +1,7 @@
 package com.sty.iso {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	/**
 	 *有颜色的立方体 
@@ -75,14 +76,66 @@ package com.sty.iso {
 			weapon.y = -weapon.height/2;
 			this.addChild(currentWeapon)
 			setDirection(1)
+			weaponHeight = weapon.height
+			weaponWidth =  weapon.width
+			_weaponRect = new Rectangle(0,0,weapon.width , weapon.height);
 		}
 		
 		public function drop():void{
 			isDrop = true
 		}
 		
+		public function setAttackState(_attack:int):void{
+			attackState = _attack;
+			if(attackState == -1){
+				_weaponRect = new Rectangle();
+				currentWeapon.visible = false
+			}else if(attackState == 1){
+				currentWeapon.visible = true
+				_weaponRect.width = weaponWidth;
+				_weaponRect.height = weaponHeight;
+				switch(currentDirection)
+				{
+					case 1:
+						_weaponRect.x = x
+						_weaponRect.y = z - weaponHeight/2
+						break;
+					case 2:
+						_weaponRect.x = x
+						_weaponRect.y = z
+						break;
+					case 3:
+						_weaponRect.x = x - weaponWidth/2
+						_weaponRect.y = z
+						break;
+					case 4:
+						_weaponRect.x = x - weaponWidth
+						_weaponRect.y = z
+						break;
+					case 5:
+						_weaponRect.x = x - weaponWidth
+						_weaponRect.y = z - weaponHeight/2
+						break;
+					case 6:
+						_weaponRect.x = x - weaponWidth
+						_weaponRect.y = z - weaponHeight
+						break;
+					case 7:
+						_weaponRect.x = x - weaponWidth/2
+						_weaponRect.y = z - weaponHeight
+						break;
+					case 8:
+						_weaponRect.x = x 
+						_weaponRect.y = z - weaponHeight
+						break;
+				}
+			}
+		}
+		
 		public function setDirection(dir:int):void{
 			currentWeapon.rotation = (dir-1)*45;
+			currentDirection = dir
+			
 		}
 		
 		

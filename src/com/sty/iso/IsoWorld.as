@@ -137,9 +137,16 @@ package com.sty.iso
 		{
 			var rect:Rectangle = obj.rect;
 			rect.offset(obj.vx, obj.vz);
+			var weaponRect:Rectangle = obj.weapon;
+			weaponRect.offset(obj.vx,obj.vz);
 			for(var i:int = 0; i < _objects.length; i++)
 			{
 				var objB:IsoObject = _objects[i] as IsoObject;
+				
+				if(obj != objB && weaponRect.intersects(objB.rect) && obj._type != objB._type){
+					return false
+				}
+				
 				if(obj != objB && !objB.walkable && rect.intersects(objB.rect) && obj._type != objB._type)
 				{
 					return false;

@@ -17,17 +17,25 @@ package com.sty.iso {
 		protected var jumpAcc:Number = -1.6
 		protected var _roadType:String
 		protected var _acceleration:Point3D;
+		
 		public var _type:String = ""
 		public var isDrop:Boolean = false;
 		public var movePath:Array
-		private var lastGrid:Point = new Point()
+		public var _weaponRect:Rectangle;
 		
+		protected var attackState:int = -1
+		protected var weaponWidth:Number = 0;
+		protected var weaponHeight:Number = 0;
+		protected var currentDirection:int = 1
+			
+		private var lastGrid:Point = new Point()
 		public static const Y_CORRECT:Number=Math.cos(- Math.PI/6)*Math.SQRT2;
 		
 		public function IsoObject(size:Number) {
 			_size=size;
 			_position = new Point3D();
 			_acceleration = new Point3D();
+			_weaponRect = new Rectangle()
 			updateScreenPosition();
 		}
 		
@@ -98,6 +106,11 @@ package com.sty.iso {
 		public function get rect():Rectangle {
 			return new Rectangle(x - size / 2, z - size / 2, size, size);
 		}
+		
+		public function get weapon():Rectangle{
+			return _weaponRect
+		}
+			
 		public function set vx(value:Number):void
 		{
 			_vx = value;
@@ -184,7 +197,7 @@ package com.sty.iso {
 			if(this.y >= 0 && isDrop == false){
 				this.y = 0
 				_acceleration.y -= _g
-				jump()
+//				jump()
 			}
 			searchPlayer()
 			dropOutScreen()			

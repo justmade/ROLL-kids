@@ -131,6 +131,10 @@
 			return transformDir()
 		}
 		
+		public function getFireState():int{
+			return attack;
+		}
+		
 		public function getDirection():int{
 			return dir
 		}

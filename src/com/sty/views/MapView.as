@@ -142,7 +142,7 @@ package com.sty.views
 		}
 		
 		private function addEnemy():void{
-			for(var i:int = 0 ; i < 5 ; i++){
+			for(var i:int = 0 ; i < 1 ; i++){
 				var index:int = emptyPlace.length * Math.random();
 				var value:Point = emptyPlace[index];
 				emptyPlace.splice(index,1);
@@ -178,12 +178,15 @@ package com.sty.views
 			return null;
 		}
 		
-		public function setKeyPoint(point_3d:Point3D,dir:int):void{
+		public function setKeyPoint(point_3d:Point3D,dir:int,attack:int):void{
 			hittestBox.vx = point_3d.x * (world.cellSize/20)
 			hittestBox.vz = point_3d.z * (world.cellSize/20)
 			hittestBox.onRender();
 			playerBox.onRender();
 			playerBox.setDirection(dir)
+			hittestBox.setDirection(dir)
+			playerBox.setAttackState(attack)
+			hittestBox.setAttackState(attack)
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
 				playerBox.vx = point_3d.x * (world.cellSize/20)
@@ -222,15 +225,15 @@ package com.sty.views
 			hittestBox.onRender();
 			playerBox.onRender();
 			
-			if(!playerBox.gridChange(world.cellSize)){
-				for(var i:int = 0 ; i < enemys.length ; i ++){
-					var enemy:IsoObject = enemys[i]
-					astarGrid.setStartNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
-					astarGrid.setEndNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
-					var path:Array = onPath();
-					enemy.movePath = path;
-				}
-			}
+//			if(!playerBox.gridChange(world.cellSize)){
+//				for(var i:int = 0 ; i < enemys.length ; i ++){
+//					var enemy:IsoObject = enemys[i]
+//					astarGrid.setStartNode(playerBox.position.x/cellSize,playerBox.position.z/cellSize);
+//					astarGrid.setEndNode(enemy.position.x/cellSize,enemy.position.z/cellSize);
+//					var path:Array = onPath();
+//					enemy.movePath = path;
+//				}
+//			}
 			
 			for(var i:int = 0 ; i < enemys.length ; i ++){
 				enemys[i].onRender();

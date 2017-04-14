@@ -2,8 +2,6 @@ package
 {
 	import com.sty.controller.KeyboardController;
 	import com.sty.iso.DrawnIsoBox;
-	import com.sty.iso.DrawnIsoTile;
-	import com.sty.iso.IsoObject;
 	import com.sty.iso.IsoUtils;
 	import com.sty.iso.IsoWorld;
 	import com.sty.iso.Point3D;
@@ -46,7 +44,8 @@ package
 		{
 			var point_3d:Point3D = keyController.getKeyboard()
 			var dir:int = keyController.getDirection();
-			mapView.setKeyPoint(point_3d,dir)
+			var attack:int = keyController.getFireState();
+			mapView.setKeyPoint(point_3d,dir,attack)
 			mapView.onRender();
 			cameraView.onTween();
 //			var location:Point3D = new Point3D(playerBox.x + point_3d.x * (world.cellSize/20) , 0, playerBox.z + point_3d.z * (world.cellSize/20))
