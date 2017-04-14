@@ -187,6 +187,11 @@ package com.sty.views
 			hittestBox.setDirection(dir)
 			playerBox.setAttackState(attack)
 			hittestBox.setAttackState(attack)
+			var isHit:Boolean = false
+			if(attack == 1){
+				isHit = world.attackJudge(hittestBox)
+				trace("isHit",isHit)
+			}
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
 				playerBox.vx = point_3d.x * (world.cellSize/20)

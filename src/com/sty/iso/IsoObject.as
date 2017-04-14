@@ -202,11 +202,20 @@ package com.sty.iso {
 			searchPlayer()
 			dropOutScreen()			
 			_acceleration.y += _g
+			this.vx += _acceleration.x
 			this.vy += _acceleration.y
+			this.vz += _acceleration.z
 			this.y += this.vy;
 			this.x += this.vx;
 			this.z += this.vz;
-			_acceleration.y  = 0
+			_acceleration.x = 0
+			_acceleration.y = 0
+			_acceleration.z = 0
+		}
+		
+		public function attacked():void{
+			_acceleration.x = -13 * this.vx/Math.abs(this.vx)
+			_acceleration.z = -13 * this.vz/Math.abs(this.vz)
 		}
 	}
 }
