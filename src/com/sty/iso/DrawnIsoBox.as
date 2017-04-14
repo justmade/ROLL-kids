@@ -3,6 +3,8 @@ package com.sty.iso {
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	
+	import data.ElementType;
+	
 	/**
 	 *有颜色的立方体 
 	 * @author dell
@@ -21,7 +23,10 @@ package com.sty.iso {
 			
 			super(size, color, height,alpha);
 			_type = type
-			addCloseWeapon()
+			if(_type == ElementType.PLAYER){
+				addCloseWeapon()
+			}
+			
 		}
 		
 		override protected function draw():void {

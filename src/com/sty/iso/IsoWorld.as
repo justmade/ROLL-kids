@@ -2,6 +2,8 @@ package com.sty.iso
 {
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
+	
+	import data.ElementType;
 
 	public class IsoWorld extends Sprite
 	{
@@ -138,7 +140,7 @@ package com.sty.iso
 			for(var i:int = 0; i < _objects.length; i++)
 			{
 				var objB:IsoObject = _objects[i] as IsoObject;				
-				if(obj != objB && weaponRect.intersects(objB.rect) && obj._type != objB._type){
+				if(obj != objB && weaponRect.intersects(objB.rect) && obj._type != objB._type && objB._type!= ElementType.BULLET){
 					objB.attacked(obj.vx,obj.vz)
 					return true
 				}						

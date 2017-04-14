@@ -50,7 +50,12 @@ package com.sty.views
 		private var enemys:Vector.<IsoObject>;
 		
 		private var astarGrid:Grid;
+		
 		private var gridSp:Sprite;
+		
+		private var bulletArr:Vector.<IsoObject>;
+		
+		private var lastKeyP3d:Point3D = new Point3D(1,0,0);
 			
 		public function MapView(_camera:CameraView)
 		{
@@ -62,6 +67,7 @@ package com.sty.views
 			enemys = new Vector.<IsoObject>;
 			astarGrid = new Grid()
 			astarGrid.creatGrid(col,row)
+			bulletArr = new Vector.<IsoObject>()
 			
 			this.addChild(mapSp)
 			this.addChild(playerSp)
@@ -178,7 +184,20 @@ package com.sty.views
 			return null;
 		}
 		
+		public function addBullet():void{
+			var bullet:DrawnIsoBox = new DrawnIsoBox(world.cellSize/4, 0xd6c135, world.cellSize/4,1,ElementType.BULLET)
+//			var pos:Point3D = new Point3D(playerBox.x * world.cellSize, 0, playerBox.z * world.cellSize)
+			bullet.position =  new Point3D(playerBox.position.x,0,playerBox.position.z);
+			world.addChildToWorld(bullet);
+			bullet.vx = lastKeyP3d.x * (world.cellSize/20)
+			bullet.vz = lastKeyP3d.z * (world.cellSize/20)
+			bulletArr.push(bullet);
+		}
+		
 		public function setKeyPoint(point_3d:Point3D,dir:int,attack:int):void{
+			if(!point_3d.equal(new Point3D()) && !point_3d.equal(lastKeyP3d)){
+				lastKeyP3d = point_3d
+			}
 			hittestBox.vx = point_3d.x * (world.cellSize/20)
 			hittestBox.vz = point_3d.z * (world.cellSize/20)
 			hittestBox.onRender();
@@ -190,7 +209,7 @@ package com.sty.views
 			var isHit:Boolean = false
 			if(attack == 1){
 				isHit = world.attackJudge(hittestBox)
-				trace("isHit",isHit)
+				addBullet();
 			}
 			var canMove:Boolean =  world.canMove(hittestBox)	
 			if(canMove){
@@ -242,6 +261,10 @@ package com.sty.views
 			
 			for(var i:int = 0 ; i < enemys.length ; i ++){
 				enemys[i].onRender();
+			}
+			
+			for(i = 0 ; i < bulletArr.length ; i ++){
+				bulletArr[i].onRender()
 			}
 		}
 	}
