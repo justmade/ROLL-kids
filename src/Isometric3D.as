@@ -35,6 +35,7 @@ package
 			mapView    = new MapView(cameraView)
 				
 			this.addChild(mapView)
+				trace("qq")
 
 			keyController = new KeyboardController(this.stage);
 			this.addEventListener(Event.ENTER_FRAME , onRender)
